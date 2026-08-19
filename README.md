@@ -1,6 +1,6 @@
-# HillView Ai
+# TripsToKenya
 
-A one-page luxury mountain-retreat site recreated from the HillView Ai design. Glass overlays sit on a dusk villa hero, with scroll and pointer parallax on the photography and content.
+An AI travel agent for Kenyan destinations that leave unforgettable memories. The one-page site curates ideal locations, the best hotels, and editor’s choice routes — with scroll and pointer parallax.
 
 Open `index.html` or serve the folder:
 

@@ -14,41 +14,41 @@
     {
       img: "images/avatar-3.jpg",
       quote:
-        "What started as a weekend getaway became our favorite annual tradition. Every detail—from the villa to the personalized itinerary—felt effortless and unforgettable.",
+        "The agent built a Mara-to-Diani week we still talk about. Dawn game drive, lunch under an acacia, then the Indian Ocean two days later.",
     },
     {
       img: "images/avatar-2.jpg",
       quote:
-        "The AI planner found a cliffside villa we never would have discovered on our own. Morning mist over the lake, dinner waiting when we returned from the trail.",
+        "Giraffe Manor on night one, then a bush flight into the Mara. TripsToKenya sequenced it so we never felt rushed — only lucky.",
     },
     {
       img: "images/avatar-4.jpg",
       quote:
-        "Traveling with three kids usually means compromise. HillView Ai gave us space, quiet, and a schedule that actually felt like a holiday.",
+        "Traveling with three kids usually means compromise. The family Amboseli circuit gave us elephants at breakfast and a lodge that actually understood children.",
     },
     {
       img: "images/avatar-1.jpg",
       quote:
-        "I asked for a wellness weekend and woke up above the clouds. Spa at dusk, stargazing from the terrace, and not a single decision I had to make twice.",
+        "I asked for Lamu and a little nothing-to-do. The editor’s house, a dhow at dusk, and a cook who already knew I don’t eat shellfish.",
     },
   ];
   let storyIndex = 0;
 
   const replies = [
     {
-      test: /family|kids|scenic|villa/i,
-      title: "Family villa, Aspen",
-      body: "A 5-bedroom ridgeline villa with heated indoor-outdoor pool, kids’ alpine club, and a private chef. Best window: late September through February.",
+      test: /mara|safari|tent|wildlife|migration/i,
+      title: "Maasai Mara · luxury tented camp",
+      body: "Three nights on the escarpment during migration season, private guide, and a bush flight from Nairobi. Editor’s pick if this is your first Kenya safari.",
     },
     {
-      test: /romantic|weekend|two|couple/i,
-      title: "Romantic hideaway, Zermatt",
-      body: "A glass chalet for two with a cedar soak, stargazing deck, and a tasting menu delivered in-villa. I can hold Friday–Sunday next month.",
+      test: /diani|beach|romantic|villa|coast|honeymoon/i,
+      title: "Diani Beach · private villa",
+      body: "A staffed beach villa on the south coast, reef snorkeling, and slow mornings. Best after safari — I can pair it with two nights in the Mara.",
     },
     {
-      test: /wellness|spa|retreat/i,
-      title: "Wellness retreat, Banff",
-      body: "A clifftop suite with panoramic spa, sunrise yoga pavilion, and a concierge-led forest bathing walk. Airport pickup is already reserved.",
+      test: /family|kids|amboseli|nairobi|giraffe/i,
+      title: "Family circuit · Nairobi to Amboseli",
+      body: "Giraffe Manor on arrival, then Amboseli for elephants and Kilimanjaro views. Short drives, family suites, and a guide who works beautifully with children.",
     },
   ];
 
@@ -73,6 +73,7 @@
   const openReserve = () => openOverlay(reservePanel);
   document.getElementById("reserveBtn").addEventListener("click", openReserve);
   document.getElementById("planStayBtn").addEventListener("click", openReserve);
+  document.getElementById("planEscapeBtn").addEventListener("click", openReserve);
   document.getElementById("reserveClose").addEventListener("click", () => closeOverlay(reservePanel));
 
   overlay.addEventListener("click", (e) => {
@@ -87,7 +88,7 @@
     const note = document.getElementById("reserveNote");
     note.hidden = false;
     note.textContent =
-      "Request received. A HillView concierge will confirm live villa availability within a few minutes.";
+      "Request received. Your TripsToKenya agent will confirm lodges, flights, and an editor’s route within a few minutes.";
   });
 
   const askAgent = (query) => {
@@ -96,8 +97,8 @@
     agentInput.value = q;
     const match = replies.find((item) => item.test.test(q));
     const result = match || {
-      title: "Custom escape",
-      body: "I can shape a stay around that. Tell me dates and how many are traveling, or tap Reserve Your Stay and I’ll hold a villa while we refine the plan.",
+      title: "Custom Kenya route",
+      body: "I can shape that around ideal locations, the right hotels, and an editor’s sequence. Share dates or tap Plan Your Trip and I’ll hold the lodges while we refine it.",
     };
     agentReply.hidden = false;
     agentReply.innerHTML = `<strong>${result.title}</strong>${result.body}`;
@@ -119,7 +120,7 @@
     guestCard.querySelector("p").textContent = next.quote;
   });
 
-  document.querySelectorAll(".story, .overview-intro, .retreat-card, .overview-meta, .escape-card, .story-photos").forEach((el) => {
+  document.querySelectorAll(".story, .overview-intro, .retreat-card, .overview-meta, .escape-card, .story-photos, .place-card, .hotel-card, .editors-copy, .editors-card, .section-head").forEach((el) => {
     el.classList.add("reveal");
   });
 
