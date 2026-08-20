@@ -10,7 +10,7 @@ def page(title, description, page_id, hero_img, hero_alt, crumb, heading, lede, 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} — Kenya Chikoh Safaris</title>
+    <title>{title} — TripsToKenya</title>
     <meta name="description" content="{description}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,9 +47,11 @@ def page(title, description, page_id, hero_img, hero_alt, crumb, heading, lede, 
 
 
 def cards(items, prefix):
-    out = ['<div class="catalog-host">', f'  <div class="place-grid catalog">']
+    out = ['<div class="catalog-host">', '  <div class="place-grid catalog">']
     sheets = []
-    for item in items:
+    for i, item in enumerate(items):
+        prev_item = items[i - 1]
+        next_item = items[(i + 1) % len(items)]
         out.append(
             f'''    <button class="place-card" type="button" data-open-panel="panel-{item["id"]}">
       <img src="{item["img"]}" alt="{item["title"]}" />
@@ -63,7 +65,7 @@ def cards(items, prefix):
         points = "".join(f"<li>{p}</li>" for p in item.get("points", []))
         sheets.append(
             f'''  <article class="sheet" id="panel-{item["id"]}">
-    <button class="sheet-back" type="button" data-close-panel>← Back to {prefix}</button>
+    <button class="sheet-back" type="button" data-close-panel>← All {prefix}</button>
     <div class="sheet-grid">
       <img src="{item["img"]}" alt="{item["title"]}" />
       <div class="prose">
@@ -74,6 +76,16 @@ def cards(items, prefix):
         <button class="btn btn-dark js-reserve" type="button">Enquire</button>
       </div>
     </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-{prev_item["id"]}">
+        <span>Previous</span>
+        <strong>{prev_item["title"]}</strong>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-{next_item["id"]}">
+        <span>Next</span>
+        <strong>{next_item["title"]}</strong>
+      </button>
+    </nav>
   </article>'''
         )
     out.append("  </div>")

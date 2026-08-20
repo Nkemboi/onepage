@@ -18,6 +18,7 @@
     lodges: `${root}lodges.html`,
     transport: `${root}transport.html`,
     payment: `${root}payment.html`,
+    info: `${root}info.html`,
   });
 
   const mount = (name, html) => {
@@ -39,23 +40,18 @@
           <button class="nav-close js-menu" type="button" aria-label="Close menu">
             <span></span><span></span>
           </button>
-          <nav class="overlay-links overlay-split">
-            <div>
-              <p class="overlay-kicker">TripsToKenya</p>
-              <a href="${links.home}" data-nav="home">Home</a>
-              <a href="${links.destinations}" data-nav="destinations">Destinations</a>
-              <a href="${links.hotels}" data-nav="hotels">Hotels</a>
-              <a href="${links.editors}" data-nav="editors">Editor’s Choice</a>
-              <a href="${links.story}" data-nav="story">Our Story</a>
-            </div>
-            <div>
-              <p class="overlay-kicker">Chikoh Safaris</p>
-              <a href="${links.packages}" data-nav="packages">Packages</a>
-              <a href="${links.activities}" data-nav="activities">Activities</a>
-              <a href="${links.lodges}" data-nav="lodges">Lodges</a>
-              <a href="${links.transport}" data-nav="transport">Transport</a>
-              <a href="${links.payment}" data-nav="payment">Payment</a>
-            </div>
+          <nav class="overlay-links overlay-unified">
+            <a href="${links.home}" data-nav="home">Home</a>
+            <a href="${links.destinations}" data-nav="destinations">Destinations</a>
+            <a href="${links.hotels}" data-nav="hotels">Hotels</a>
+            <a href="${links.packages}" data-nav="packages">Packages</a>
+            <a href="${links.activities}" data-nav="activities">Activities</a>
+            <a href="${links.lodges}" data-nav="lodges">Lodges</a>
+            <a href="${links.transport}" data-nav="transport">Transport</a>
+            <a href="${links.editors}" data-nav="editors">Editor’s Choice</a>
+            <a href="${links.info}" data-nav="info">Important Information</a>
+            <a href="${links.story}" data-nav="story">Our Story</a>
+            <a href="${links.payment}" data-nav="payment">Payment</a>
             <button class="overlay-cta js-reserve" type="button">Plan Your Trip</button>
           </nav>
         </div>
@@ -135,7 +131,7 @@
         <div class="escape-card" data-parallax="0.04">
           <div class="escape-copy">
             <h2>Ready for Kenya?</h2>
-            <p>Ask the agent for a route — or book a Chikoh safari, lodge, and transfer in the same conversation.</p>
+            <p>Ask the agent for a route built around unforgettable places, the right lodges, and a sequence that fits how you travel.</p>
             <button class="btn btn-dark js-reserve" type="button">Plan My Trip</button>
           </div>
           <div class="escape-photo">
@@ -147,34 +143,35 @@
             <a href="${links.home}" class="brand" aria-label="TripsToKenya home">
               <img src="${logo}" alt="TripsToKenya" />
             </a>
-            <p>An AI travel agent for Kenyan destinations that leave unforgettable memories. Also featuring Kenya Chikoh Tours Safaris &amp; Explorers.</p>
+            <p>An AI travel agent for Kenyan destinations that leave unforgettable memories. Destinations that inspire.</p>
           </div>
           <div class="footer-cols">
             <div>
               <h4>Explore</h4>
               <a href="${links.destinations}">Destinations</a>
               <a href="${links.hotels}">Hotels</a>
-              <a href="${links.editors}">Editor’s Choice</a>
-              <a href="${links.story}">Our Story</a>
-            </div>
-            <div>
-              <h4>Chikoh Safaris</h4>
               <a href="${links.packages}">Packages</a>
               <a href="${links.activities}">Activities</a>
               <a href="${links.lodges}">Lodges</a>
               <a href="${links.transport}">Transport</a>
-              <a href="${links.payment}">Payment</a>
             </div>
             <div>
-              <h4>Support</h4>
+              <h4>Plan</h4>
+              <a href="${links.editors}">Editor’s Choice</a>
+              <a href="${links.info}">Important Information</a>
+              <a href="${links.story}">Our Story</a>
+              <a href="${links.payment}">Payment</a>
               <a href="${links.contact}">Contact</a>
-              <a href="${links.payment}">Paybill &amp; Bank</a>
+            </div>
+            <div>
+              <h4>Desk</h4>
+              <a href="${links.contact}">Help Center</a>
               <a href="tel:+254721425858">+254 721 425 858</a>
               <a href="mailto:kenyachikohsafaris@gmail.com">Email the desk</a>
             </div>
           </div>
           <div class="footer-base">
-            <p>© 2026 TripsToKenya. Chikoh content used with permission of the operator.</p>
+            <p>© 2026 TripsToKenya. All rights reserved.</p>
             <p>
               <a href="${links.contact}">Privacy Policy</a>
               <span>·</span>
@@ -225,15 +222,25 @@
 
   const closePanels = () => {
     document.querySelectorAll(".sheet.is-open").forEach((el) => el.classList.remove("is-open"));
-    document.querySelector(".catalog-host")?.classList.remove("is-dimmed");
+    document.querySelector(".catalog-host")?.classList.remove("is-reading");
+  };
+
+  const restartFade = (el) => {
+    if (!el) return;
+    el.classList.remove("is-fade");
+    void el.offsetWidth;
+    el.classList.add("is-fade");
   };
 
   const openPanel = (id) => {
-    closePanels();
     const sheet = document.getElementById(id);
     if (!sheet) return;
+    document.querySelectorAll(".sheet.is-open").forEach((el) => {
+      if (el !== sheet) el.classList.remove("is-open");
+    });
+    document.querySelector(".catalog-host")?.classList.add("is-reading");
     sheet.classList.add("is-open");
-    document.querySelector(".catalog-host")?.classList.add("is-dimmed");
+    restartFade(sheet);
     sheet.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   };
 
@@ -270,7 +277,7 @@
       if (!note) return;
       note.hidden = false;
       note.textContent =
-        "Request received. Your TripsToKenya / Chikoh desk will confirm lodges, transfers, and a route within a few minutes.";
+        "Request received. Your TripsToKenya desk will confirm lodges, transfers, and a route within a few minutes.";
     });
 
     document.querySelectorAll("[data-open-panel]").forEach((btn) => {
@@ -327,7 +334,7 @@
       },
       {
         test: /tsavo|voi|salt|chikoh/i,
-        title: "Tsavo with Chikoh Safaris",
+        title: "Tsavo East & West",
         body: "One to three days in Tsavo East and West — Voi, Kilaguni or Salt Lick — with airport transfer and a pop-top game drive.",
       },
       {
@@ -350,7 +357,7 @@
       const match = replies.find((item) => item.test.test(q));
       const result = match || {
         title: "Custom Kenya route",
-        body: "I can shape that around ideal locations, Chikoh lodges, and an editor’s sequence. Share dates or tap Plan Your Trip.",
+        body: "I can shape that around ideal locations, the right lodges, and an editor’s sequence. Share dates or tap Plan Your Trip.",
       };
       agentReply.hidden = false;
       agentReply.innerHTML = `<strong>${result.title}</strong>${result.body}`;
@@ -467,25 +474,6 @@
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const ensureVeil = () => {
-    let veil = document.querySelector(".page-veil");
-    if (!veil) {
-      veil = document.createElement("div");
-      veil.className = "page-veil";
-      veil.setAttribute("aria-hidden", "true");
-      veil.innerHTML = `
-        <div class="page-veil-panel">
-          <span class="page-veil-line"></span>
-          <img class="page-veil-mark" src="${pageRoot()}images/logo.png" alt="" />
-        </div>
-      `;
-      document.documentElement.appendChild(veil);
-    }
-    const mark = veil.querySelector(".page-veil-mark");
-    if (mark) mark.src = `${pageRoot()}images/logo.png`;
-    return veil;
-  };
-
   let routing = false;
 
   const isInternal = (anchor) => {
@@ -508,12 +496,8 @@
     if (url.pathname === location.pathname && !url.hash) return;
     if (routing) return;
     routing = true;
-
-    const veil = ensureVeil();
-    veil.classList.remove("is-uncovering");
-    void veil.offsetWidth;
-    veil.classList.add("is-covering");
-    if (!reduce) await wait(620);
+    document.body.classList.add("is-leave");
+    if (!reduce) await wait(180);
 
     try {
       const res = await fetch(url.pathname + url.search, { headers: { "X-Requested-With": "same-window" } });
@@ -532,18 +516,13 @@
         requestAnimationFrame(() => document.querySelector(url.hash)?.scrollIntoView());
       }
     } catch (err) {
+      document.body.classList.remove("is-leave", "is-enter");
       routing = false;
-      veil.classList.remove("is-covering");
       location.assign(url.href);
       return;
     }
 
-    requestAnimationFrame(() => {
-      veil.classList.remove("is-covering");
-      veil.classList.add("is-uncovering");
-    });
-    await wait(reduce ? 40 : 720);
-    veil.classList.remove("is-uncovering");
+    await wait(reduce ? 40 : 560);
     document.body.classList.remove("is-enter");
     routing = false;
   };

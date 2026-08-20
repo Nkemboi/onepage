@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transport — Kenya Chikoh Safaris</title>
+    <title>Transport — TripsToKenya</title>
     <meta name="description" content="Airport transfers, 4x4s, group minivans and in-park game drives from Kenya Chikoh Safaris." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +22,7 @@
       </div>
       <div class="page-hero-shade"></div>
       <div class="page-hero-copy">
-        <p class="crumb"><a href="index.html">Home</a> <span>/</span> Transport</p>
+        <p class="crumb"><a href="index.html">Home</a> <span>/</span> Chikoh <span>/</span> Transport</p>
         <h1>Reliable transport</h1>
         <p class="lede wide">Your journey begins with us — airport transfers and in-park transport, so you can focus on the adventure.</p>
       </div>
@@ -73,7 +73,7 @@
     </button>
   </div>
   <article class="sheet" id="panel-suv">
-    <button class="sheet-back" type="button" data-close-panel>← Back to transport</button>
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
     <div class="sheet-grid">
       <img src="images/chikoh/suv.jpg" alt="4x4 SUVs" />
       <div class="prose">
@@ -84,9 +84,19 @@
         <button class="btn btn-dark js-reserve" type="button">Enquire</button>
       </div>
     </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-gamedrive">
+        <span>Previous</span>
+        <strong>In-park game drives</strong>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-van">
+        <span>Next</span>
+        <strong>Minivans for groups</strong>
+      </button>
+    </nav>
   </article>
   <article class="sheet" id="panel-van">
-    <button class="sheet-back" type="button" data-close-panel>← Back to transport</button>
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
     <div class="sheet-grid">
       <img src="images/chikoh/minivan.jpg" alt="Minivans for groups" />
       <div class="prose">
@@ -97,9 +107,19 @@
         <button class="btn btn-dark js-reserve" type="button">Enquire</button>
       </div>
     </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-suv">
+        <span>Previous</span>
+        <strong>4x4 SUVs</strong>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-guide">
+        <span>Next</span>
+        <strong>Personalised tour with a guide</strong>
+      </button>
+    </nav>
   </article>
   <article class="sheet" id="panel-guide">
-    <button class="sheet-back" type="button" data-close-panel>← Back to transport</button>
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
     <div class="sheet-grid">
       <img src="images/safari-guest.jpg" alt="Personalised tour with a guide" />
       <div class="prose">
@@ -110,9 +130,19 @@
         <button class="btn btn-dark js-reserve" type="button">Enquire</button>
       </div>
     </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-van">
+        <span>Previous</span>
+        <strong>Minivans for groups</strong>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-airport">
+        <span>Next</span>
+        <strong>Airport transfers</strong>
+      </button>
+    </nav>
   </article>
   <article class="sheet" id="panel-airport">
-    <button class="sheet-back" type="button" data-close-panel>← Back to transport</button>
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
     <div class="sheet-grid">
       <img src="images/chikoh/suv.jpg" alt="Airport transfers" />
       <div class="prose">
@@ -123,9 +153,19 @@
         <button class="btn btn-dark js-reserve" type="button">Enquire</button>
       </div>
     </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-guide">
+        <span>Previous</span>
+        <strong>Personalised tour with a guide</strong>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-gamedrive">
+        <span>Next</span>
+        <strong>In-park game drives</strong>
+      </button>
+    </nav>
   </article>
   <article class="sheet" id="panel-gamedrive">
-    <button class="sheet-back" type="button" data-close-panel>← Back to transport</button>
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
     <div class="sheet-grid">
       <img src="images/chikoh/suv.jpg" alt="In-park game drives" />
       <div class="prose">
@@ -136,6 +176,16 @@
         <button class="btn btn-dark js-reserve" type="button">Enquire</button>
       </div>
     </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-airport">
+        <span>Previous</span>
+        <strong>Airport transfers</strong>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-suv">
+        <span>Next</span>
+        <strong>4x4 SUVs</strong>
+      </button>
+    </nav>
   </article>
 </div>
     </main>
