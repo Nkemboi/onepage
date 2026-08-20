@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TripsToKenya — Destinations That Inspire</title>
+    <meta
+      name="description"
+      content="An AI travel agent for Kenyan destinations that leave unforgettable memories. Ideal locations, the best hotels, and editor’s choice stays."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-root="" data-page="home">
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div data-include="overlays"></div>
+
+    <header class="hero" id="top">
+      <div class="hero-frame">
+        <div class="hero-media" data-parallax="0.22">
+          <img src="images/hero-kenya.jpg" alt="Safari lodge at sunset on the Maasai Mara" class="hero-photo" />
+        </div>
+        <div class="hero-shade"></div>
+
+        <div class="topbar">
+          <button class="menu-btn js-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+            <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="menu-label">Menu</span>
+          </button>
+          <a href="index.html" class="brand" aria-label="TripsToKenya home">
+            <img src="images/logo.png" alt="TripsToKenya" />
+          </a>
+          <button class="btn btn-light js-reserve" type="button">Plan Your Trip</button>
+        </div>
+
+        <div class="hero-copy">
+          <div class="social-proof" data-depth="0.04">
+            <div class="avatars">
+              <img src="images/avatar-1.jpg" alt="" />
+              <img src="images/avatar-2.jpg" alt="" />
+              <img src="images/avatar-3.jpg" alt="" />
+            </div>
+            <span>12K explorers already with us.</span>
+          </div>
+
+          <h1 data-depth="0.08">
+            Destinations That Inspire<br />
+            Memories That Stay
+          </h1>
+
+          <form class="agent-bar" id="agentForm" data-depth="0.05">
+            <input
+              type="text"
+              id="agentInput"
+              placeholder="Where in Kenya would you like to go..."
+              autocomplete="off"
+            />
+            <button type="submit" class="btn btn-dark ask-btn">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M8 1.5l1.2 3.6L13 6.4l-3.8 1.3L8 11.5 6.8 7.7 3 6.4l3.8-1.3L8 1.5z"
+                  fill="currentColor"
+                />
+              </svg>
+              Ask Agent
+            </button>
+          </form>
+
+          <div class="suggestions" id="suggestions">
+            <button type="button" data-query="Plan a Maasai Mara safari with a luxury tented camp">
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="4.4" stroke="currentColor" stroke-width="1.4" />
+                <path d="M10.4 10.4L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+              </svg>
+              Plan a Maasai Mara safari with a luxury tented camp
+            </button>
+            <button type="button" data-query="Find a Diani Beach villa for a romantic escape">
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="4.4" stroke="currentColor" stroke-width="1.4" />
+                <path d="M10.4 10.4L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+              </svg>
+              Find a Diani Beach villa for a romantic escape
+            </button>
+            <button type="button" data-query="Curate a family trip from Nairobi to Amboseli">
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="4.4" stroke="currentColor" stroke-width="1.4" />
+                <path d="M10.4 10.4L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+              </svg>
+              Curate a family trip from Nairobi to Amboseli
+            </button>
+          </div>
+
+          <div class="agent-reply" id="agentReply" hidden></div>
+        </div>
+
+        <aside class="glass-card card-left" data-depth="0.12">
+          <h3>
+            <span class="spark">✦</span>
+            AI Trip Planner
+          </h3>
+          <ul>
+            <li>Ideal locations</li>
+            <li>Best hotels to stay in</li>
+            <li>Editor’s choice routes</li>
+            <li>Local insider experiences</li>
+          </ul>
+        </aside>
+
+        <aside class="glass-card card-right" data-depth="0.1">
+          <h3>
+            <svg class="signal" viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+              <path d="M2.2 10.2a7.2 7.2 0 0 1 11.6 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M4.4 12a4.4 4.4 0 0 1 7.2 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="8" cy="14" r="1" fill="currentColor"/>
+            </svg>
+            Live Availability
+          </h3>
+          <ul class="status-list">
+            <li><i class="dot green"></i>Mara camps open</li>
+            <li><i class="dot mint"></i>Migration season</li>
+            <li><i class="dot green"></i>Game drives ready</li>
+            <li><i class="dot teal"></i>Diani villas free</li>
+            <li><i class="dot green"></i>JKIA transfers on</li>
+          </ul>
+        </aside>
+
+        <div class="hero-trust left-trust" data-depth="0.06">
+          <div class="avatars lg">
+            <img src="images/avatar-4.jpg" alt="" />
+            <img src="images/avatar-1.jpg" alt="" />
+            <img src="images/avatar-2.jpg" alt="" />
+          </div>
+          <p>Trusted by 20,000+ Happy<br />Travelers Worldwide</p>
+        </div>
+
+        <div class="hero-trust right-trust" data-depth="0.06">
+          <img class="lockup-logo" src="images/logo.png" alt="" />
+          <p>Trusted by Leading<br />Kenyan Lodges</p>
+        </div>
+
+        <a href="story.html" class="our-story">Our Story</a>
+      </div>
+    </header>
+
+    <section class="story" id="story">
+      <div class="story-inner">
+        <div class="story-copy" data-parallax="0.08">
+          <h2>
+            TripsToKenya is an
+            <strong>AI travel agent</strong> for Kenyan destinations that leave
+            <strong>unforgettable memories</strong>. We curate ideal locations,
+            the <strong>best hotels</strong>, and editor’s choice stays.
+          </h2>
+          <div class="story-icons">
+            <button class="round-icon" aria-label="Safari weather">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                <path d="M7.5 17a4 4 0 1 1 1.4-7.75A5 5 0 1 1 17 17H7.5z" stroke="currentColor" stroke-width="1.6" />
+              </svg>
+            </button>
+            <button class="round-icon" aria-label="Lodges">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                <path d="M4 11.5L12 5l8 6.5V20H4v-8.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                <path d="M10 20v-6h4v6" stroke="currentColor" stroke-width="1.6" />
+              </svg>
+            </button>
+            <button class="round-icon" aria-label="Destinations">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                <path d="M12 21s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10z" stroke="currentColor" stroke-width="1.6" />
+                <circle cx="12" cy="11" r="1.8" stroke="currentColor" stroke-width="1.4" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="story-photos">
+          <figure class="photo-card" data-parallax="-0.07">
+            <img src="images/diani-beach.jpg" alt="Luxury villa on Diani Beach" />
+          </figure>
+          <figure class="photo-card tall" data-parallax="0.1">
+            <img src="images/safari-guest.jpg" alt="Guest on an early-morning game drive" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="overview" id="locations">
+      <div class="section-head" data-parallax="0.04">
+        <p class="eyebrow light">Ideal Locations</p>
+        <h2>Kenya, curated by place.</h2>
+        <p class="lede wide">From the Mara plains to the Swahili coast, the agent matches season, pace, and who you are traveling with.</p>
+      </div>
+
+      <div class="place-grid">
+        <a class="place-card" href="destinations/maasai-mara.html" data-parallax="-0.04">
+          <img src="images/mara-landscape.jpg" alt="Maasai Mara savanna" />
+          <div>
+            <span>Wildlife</span>
+            <h3>Maasai Mara</h3>
+            <p>The great migration, big cats, and golden light on open plains.</p>
+          </div>
+        </a>
+        <a class="place-card" href="destinations/amboseli.html" data-parallax="0.05">
+          <img src="images/amboseli.jpg" alt="Elephants in Amboseli" />
+          <div>
+            <span>Elephants</span>
+            <h3>Amboseli</h3>
+            <p>Herds beneath Kilimanjaro and some of Kenya’s clearest dawns.</p>
+          </div>
+        </a>
+        <a class="place-card" href="destinations/diani.html" data-parallax="-0.03">
+          <img src="images/diani-beach.jpg" alt="Diani Beach coastline" />
+          <div>
+            <span>Coast</span>
+            <h3>Diani Beach</h3>
+            <p>White sand, warm Indian Ocean, and villas made for long afternoons.</p>
+          </div>
+        </a>
+        <a class="place-card" href="destinations/lamu.html" data-parallax="0.06">
+          <img src="images/hotel-lamu.jpg" alt="Lamu waterfront" />
+          <div>
+            <span>Culture</span>
+            <h3>Lamu</h3>
+            <p>Dhows, coral-stone houses, and a slower Swahili rhythm.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="overview-grid featured-block">
+        <div class="overview-intro" data-parallax="0.05">
+          <p class="eyebrow light">Featured location</p>
+          <h2>Follow the herds.<br />Sleep above the plains.</h2>
+          <p class="lede">
+            Whether you want a first safari, a honeymoon circuit, or a family week that mixes wildlife and the coast, we shape the days so Kenya feels effortless.
+          </p>
+          <a href="destinations.html" class="btn btn-dark explore-btn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.4" />
+              <path d="M8 4.5v3.2L10.4 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+            Explore Destinations
+          </a>
+        </div>
+
+        <a class="retreat-card" href="destinations/maasai-mara.html" data-parallax="-0.06">
+          <img src="images/mara-landscape.jpg" alt="Golden light over the Maasai Mara" />
+          <span class="badge">Ideal Location</span>
+          <div class="retreat-copy">
+            <h3>Maasai Mara at Golden Hour</h3>
+            <p>Open-vehicle game drives, sundowners on the escarpment, and lodges that look out over the migration corridor.</p>
+          </div>
+        </a>
+
+        <aside class="overview-meta" data-parallax="0.08">
+          <dl>
+            <div>
+              <dt>Destination</dt>
+              <dd>Maasai Mara</dd>
+            </div>
+            <div>
+              <dt>Best Time</dt>
+              <dd>Jul – Oct</dd>
+            </div>
+            <div>
+              <dt>Perfect For</dt>
+              <dd>First safari</dd>
+            </div>
+          </dl>
+
+          <blockquote class="guest-card" id="guestCard">
+            <img src="images/avatar-3.jpg" alt="Guest portrait" />
+            <p>
+              The agent built a Mara-to-Diani week we still talk about. Dawn game drive, lunch under an acacia, then the Indian Ocean two days later.
+            </p>
+          </blockquote>
+
+          <button class="stories-link" id="nextStory" type="button">
+            Read Guest Stories
+            <span class="circle-arrow" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="hotels" id="hotels">
+      <div class="section-head dark" data-parallax="0.04">
+        <p class="eyebrow">Best Hotels</p>
+        <h2>Where we actually send people.</h2>
+        <p class="lede muted">Hand-picked lodges and houses — not a directory. The agent holds rooms that match the route.</p>
+      </div>
+      <div class="hotel-grid">
+        <a class="hotel-card" href="hotels/giraffe-manor.html" data-parallax="0.05">
+          <img src="images/hotel-giraffe.jpg" alt="Giraffe Manor breakfast terrace" />
+          <div>
+            <span>Nairobi</span>
+            <h3>Giraffe Manor</h3>
+            <p>A stone manor breakfast with Rothschild giraffes — the classic opening night before safari.</p>
+          </div>
+        </a>
+        <a class="hotel-card" href="hotels/escarpment-camp.html" data-parallax="-0.04">
+          <img src="images/hotel-camp.jpg" alt="Luxury tented camp in the Mara" />
+          <div>
+            <span>Maasai Mara</span>
+            <h3>Escarpment Camp</h3>
+            <p>Canvas suites, brass lanterns, and a deck that looks straight onto the plains.</p>
+          </div>
+        </a>
+        <a class="hotel-card" href="hotels/peponi-house.html" data-parallax="0.06">
+          <img src="images/hotel-lamu.jpg" alt="Swahili boutique hotel in Lamu" />
+          <div>
+            <span>Lamu</span>
+            <h3>Peponi House</h3>
+            <p>Coral-stone rooms, carved doors, and dhow sunsets on the channel.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="editors" id="editors">
+      <div class="editors-grid">
+        <div class="editors-copy" data-parallax="0.05">
+          <p class="eyebrow light">Editor’s Choice</p>
+          <h2>The circuit we book for ourselves.</h2>
+          <p class="lede">
+            Three nights on the Mara escarpment for the migration, one night at Giraffe Manor, then four slow days on Diani. Private guide, bush flights, and nothing you have to arrange twice.
+          </p>
+          <ul class="editors-list">
+            <li>Nairobi arrival · Giraffe Manor</li>
+            <li>Bush flight to the Mara · luxury tented camp</li>
+            <li>Diani Beach villa · ocean and nothing else</li>
+          </ul>
+          <a class="btn btn-dark" href="editors.html">Read the Circuit</a>
+        </div>
+        <a class="editors-card" href="editors.html" data-parallax="-0.05">
+          <img src="images/hotel-giraffe.jpg" alt="Editor’s choice stay in Nairobi" />
+          <span class="badge">Editor’s Choice 2026</span>
+          <div class="retreat-copy">
+            <h3>The Memory Circuit</h3>
+            <p>Safari, manor, and coast — sequenced so each place has time to land.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="chikoh-band" id="more">
+      <div class="section-head dark">
+        <p class="eyebrow">TripsToKenya</p>
+        <h2>Also on this desk: Tsavo, the coast, and a vehicle.</h2>
+        <p class="lede muted">Packages, Mombasa activities, Tsavo lodges, airport transfers and what to know before you fly.</p>
+      </div>
+      <div class="place-grid">
+        <a class="place-card chikoh-card" href="packages.html">
+          <img src="images/chikoh/tsavo-lodge.jpg" alt="Tsavo package" />
+          <div>
+            <span>Packages</span>
+            <h3>Tsavo to the Mara</h3>
+            <p>One day in East, or seven days across Kenya.</p>
+          </div>
+        </a>
+        <a class="place-card chikoh-card" href="activities.html">
+          <img src="images/chikoh/snorkel.jpg" alt="Mombasa activities" />
+          <div>
+            <span>Activities</span>
+            <h3>Mombasa &amp; the reef</h3>
+            <p>Dolphins, Fort Jesus, Haller Park, Diani.</p>
+          </div>
+        </a>
+        <a class="place-card chikoh-card" href="lodges.html">
+          <img src="images/chikoh/saltlick.jpg" alt="Tsavo lodges" />
+          <div>
+            <span>Lodges</span>
+            <h3>Voi to Salt Lick</h3>
+            <p>East and West Tsavo stays we actually book.</p>
+          </div>
+        </a>
+        <a class="place-card chikoh-card" href="transport.html">
+          <img src="images/chikoh/suv.jpg" alt="Safari transport" />
+          <div>
+            <span>Transport</span>
+            <h3>4x4s &amp; transfers</h3>
+            <p>JKIA, in-park drives, group vans.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="escape" id="cta">
+      <div class="escape-bg" data-parallax="0.25">
+        <img src="images/savanna-sunset.jpg" alt="" />
+      </div>
+      <div class="escape-veil"></div>
+
+      <div class="escape-card" data-parallax="0.04">
+        <div class="escape-copy">
+          <h2>Ready for Kenya?</h2>
+          <p>Ask the agent for a route built around unforgettable places — ideal locations, the right hotels, and an editor’s sequence designed for how you travel.</p>
+          <button class="btn btn-dark js-reserve" type="button">Plan My Trip</button>
+        </div>
+        <div class="escape-photo">
+          <img src="images/traveler-kenya.jpg" alt="Traveler watching a Kenyan sunset" />
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" aria-label="TripsToKenya home">
+            <img src="images/logo.png" alt="TripsToKenya" />
+          </a>
+          <p>An AI travel agent for Kenyan destinations that leave unforgettable memories. Destinations that inspire.</p>
+        </div>
+        <div class="footer-cols">
+          <div>
+            <h4>Explore</h4>
+            <a href="destinations.html">Destinations</a>
+            <a href="hotels.html">Hotels</a>
+            <a href="packages.html">Packages</a>
+            <a href="activities.html">Activities</a>
+            <a href="lodges.html">Lodges</a>
+            <a href="transport.html">Transport</a>
+          </div>
+          <div>
+            <h4>Plan</h4>
+            <a href="editors.html">Editor’s Choice</a>
+            <a href="info.html">Important Information</a>
+            <a href="story.html">Our Story</a>
+            <a href="payment.html">Payment</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div>
+            <h4>Desk</h4>
+            <a href="contact.html">Help Center</a>
+            <a href="tel:+254721425858">+254 721 425 858</a>
+            <a href="mailto:kenyachikohsafaris@gmail.com">Email the desk</a>
+          </div>
+        </div>
+        <div class="footer-base">
+          <p>© 2026 TripsToKenya. All rights reserved.</p>
+          <p>
+            <a href="contact.html">Privacy Policy</a>
+            <span>·</span>
+            <a href="contact.html">Terms of Service</a>
+            <span>·</span>
+            <a href="contact.html">Cookie Policy</a>
+          </p>
+        </div>
+      </footer>
+    </section>
+
+    <script src="script.js"></script>
+    <script src="site.js"></script>
+  </body>
+</html>
