@@ -1,18 +1,24 @@
 (() => {
-  const root = document.body.dataset.root || "";
-  const page = document.body.dataset.page || "";
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let io = null;
+  let parallaxTick = null;
 
-  const links = {
+  const pageRoot = () => document.body.dataset.root || "";
+  const currentPage = () => document.body.dataset.page || "";
+
+  const linkSet = (root) => ({
     home: `${root}index.html`,
     destinations: `${root}destinations.html`,
     hotels: `${root}hotels.html`,
     editors: `${root}editors.html`,
     story: `${root}story.html`,
     contact: `${root}contact.html`,
-  };
-
-  const logo = `${root}images/logo.png`;
+    packages: `${root}packages.html`,
+    activities: `${root}activities.html`,
+    lodges: `${root}lodges.html`,
+    transport: `${root}transport.html`,
+    payment: `${root}payment.html`,
+  });
 
   const mount = (name, html) => {
     document.querySelectorAll(`[data-include="${name}"]`).forEach((node) => {
@@ -20,301 +26,508 @@
     });
   };
 
-  mount(
-    "overlays",
-    `
-    <div class="nav-overlay" id="navOverlay" aria-hidden="true">
-      <div class="nav-overlay-inner">
-        <button class="nav-close js-menu" type="button" aria-label="Close menu">
-          <span></span><span></span>
-        </button>
-        <nav class="overlay-links">
-          <a href="${links.home}" data-nav="home">Home</a>
-          <a href="${links.destinations}" data-nav="destinations">Destinations</a>
-          <a href="${links.hotels}" data-nav="hotels">Hotels</a>
-          <a href="${links.editors}" data-nav="editors">Editor’s Choice</a>
-          <a href="${links.story}" data-nav="story">Our Story</a>
-          <button class="overlay-cta js-reserve" type="button">Plan Your Trip</button>
-        </nav>
+  const injectChrome = () => {
+    const root = pageRoot();
+    const links = linkSet(root);
+    const logo = `${root}images/logo.png`;
+
+    mount(
+      "overlays",
+      `
+      <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+        <div class="nav-overlay-inner">
+          <button class="nav-close js-menu" type="button" aria-label="Close menu">
+            <span></span><span></span>
+          </button>
+          <nav class="overlay-links overlay-split">
+            <div>
+              <p class="overlay-kicker">TripsToKenya</p>
+              <a href="${links.home}" data-nav="home">Home</a>
+              <a href="${links.destinations}" data-nav="destinations">Destinations</a>
+              <a href="${links.hotels}" data-nav="hotels">Hotels</a>
+              <a href="${links.editors}" data-nav="editors">Editor’s Choice</a>
+              <a href="${links.story}" data-nav="story">Our Story</a>
+            </div>
+            <div>
+              <p class="overlay-kicker">Chikoh Safaris</p>
+              <a href="${links.packages}" data-nav="packages">Packages</a>
+              <a href="${links.activities}" data-nav="activities">Activities</a>
+              <a href="${links.lodges}" data-nav="lodges">Lodges</a>
+              <a href="${links.transport}" data-nav="transport">Transport</a>
+              <a href="${links.payment}" data-nav="payment">Payment</a>
+            </div>
+            <button class="overlay-cta js-reserve" type="button">Plan Your Trip</button>
+          </nav>
+        </div>
       </div>
-    </div>
-    <div class="reserve-panel" id="reservePanel" hidden>
-      <div class="reserve-card">
-        <button class="icon-close" id="reserveClose" type="button" aria-label="Close trip planner">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-          </svg>
-        </button>
-        <p class="eyebrow">TripsToKenya</p>
-        <h3>Plan Your Trip</h3>
-        <p class="reserve-lead">Tell us when you want Kenya. Our AI agent will curate locations, lodges, and an editor’s route.</p>
-        <form id="reserveForm">
-          <label>
-            Destination
-            <select name="destination" required>
-              <option value="mara">Maasai Mara</option>
-              <option value="amboseli">Amboseli</option>
-              <option value="diani">Diani Beach</option>
-              <option value="lamu">Lamu Archipelago</option>
-              <option value="nairobi">Nairobi &amp; Highlands</option>
-            </select>
-          </label>
-          <div class="form-row">
-            <label>Arrival <input type="date" name="checkin" required /></label>
-            <label>Departure <input type="date" name="checkout" required /></label>
-          </div>
-          <div class="form-row">
-            <label>Travelers <input type="number" name="guests" min="1" max="16" value="2" /></label>
+      <div class="reserve-panel" id="reservePanel" hidden>
+        <div class="reserve-card">
+          <button class="icon-close" id="reserveClose" type="button" aria-label="Close trip planner">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </button>
+          <p class="eyebrow">TripsToKenya</p>
+          <h3>Plan Your Trip</h3>
+          <p class="reserve-lead">Tell us when you want Kenya. Our AI agent will curate locations, lodges, and an editor’s route.</p>
+          <form id="reserveForm">
             <label>
-              Style
-              <select name="type">
-                <option>Wildlife Safari</option>
-                <option>Coast Escape</option>
-                <option>Family Circuit</option>
-                <option>Honeymoon</option>
+              Destination
+              <select name="destination" required>
+                <option value="mara">Maasai Mara</option>
+                <option value="amboseli">Amboseli</option>
+                <option value="tsavo">Tsavo East &amp; West</option>
+                <option value="diani">Diani Beach</option>
+                <option value="lamu">Lamu Archipelago</option>
+                <option value="nairobi">Nairobi &amp; Highlands</option>
               </select>
             </label>
-          </div>
-          <button type="submit" class="btn btn-dark btn-full">Ask the Agent</button>
-        </form>
-        <p class="reserve-note" id="reserveNote" hidden></p>
-      </div>
-    </div>
-    `
-  );
-
-  mount(
-    "header",
-    `
-    <header class="site-header">
-      <div class="topbar">
-        <button class="menu-btn js-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
-          <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="menu-label">Menu</span>
-        </button>
-        <a href="${links.home}" class="brand" aria-label="TripsToKenya home">
-          <img src="${logo}" alt="TripsToKenya" />
-        </a>
-        <button class="btn btn-light js-reserve" type="button">Plan Your Trip</button>
-      </div>
-    </header>
-    `
-  );
-
-  mount(
-    "footer",
-    `
-    <section class="escape page-end">
-      <div class="escape-bg" data-parallax="0.25">
-        <img src="${root}images/savanna-sunset.jpg" alt="" />
-      </div>
-      <div class="escape-veil"></div>
-      <div class="escape-card" data-parallax="0.04">
-        <div class="escape-copy">
-          <h2>Ready for Kenya?</h2>
-          <p>Ask the agent for a route built around unforgettable places — ideal locations, the right hotels, and an editor’s sequence.</p>
-          <button class="btn btn-dark js-reserve" type="button">Plan My Trip</button>
-        </div>
-        <div class="escape-photo">
-          <img src="${root}images/traveler-kenya.jpg" alt="Traveler watching a Kenyan sunset" />
+            <div class="form-row">
+              <label>Arrival <input type="date" name="checkin" required /></label>
+              <label>Departure <input type="date" name="checkout" required /></label>
+            </div>
+            <div class="form-row">
+              <label>Travelers <input type="number" name="guests" min="1" max="16" value="2" /></label>
+              <label>
+                Style
+                <select name="type">
+                  <option>Wildlife Safari</option>
+                  <option>Tsavo Circuit</option>
+                  <option>Coast Escape</option>
+                  <option>Family Circuit</option>
+                </select>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-dark btn-full">Ask the Agent</button>
+          </form>
+          <p class="reserve-note" id="reserveNote" hidden></p>
         </div>
       </div>
-      <footer class="site-footer">
-        <div class="footer-brand">
+      `
+    );
+
+    mount(
+      "header",
+      `
+      <header class="site-header">
+        <div class="topbar">
+          <button class="menu-btn js-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+            <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="menu-label">Menu</span>
+          </button>
           <a href="${links.home}" class="brand" aria-label="TripsToKenya home">
             <img src="${logo}" alt="TripsToKenya" />
           </a>
-          <p>An AI travel agent for Kenyan destinations that leave unforgettable memories. Destinations that inspire.</p>
+          <button class="btn btn-light js-reserve" type="button">Plan Your Trip</button>
         </div>
-        <div class="footer-cols">
-          <div>
-            <h4>Explore</h4>
-            <a href="${links.destinations}">Destinations</a>
-            <a href="${links.hotels}">Hotels</a>
-            <a href="${links.editors}">Editor’s Choice</a>
-            <a href="${links.story}">Our Story</a>
-          </div>
-          <div>
-            <h4>Support</h4>
-            <a href="${links.contact}">Help Center</a>
-            <a href="${links.contact}">Booking Policy</a>
-            <a href="${links.contact}">Cancellation</a>
-            <a href="${links.contact}">Contact</a>
-          </div>
-          <div>
-            <h4>Company</h4>
-            <a href="${links.story}">About Us</a>
-            <a href="${links.story}">Careers</a>
-            <a href="${links.contact}">Partners</a>
-            <a href="${links.contact}">Press</a>
-          </div>
-        </div>
-        <div class="footer-base">
-          <p>© 2026 TripsToKenya. All rights reserved.</p>
-          <p>
-            <a href="${links.contact}">Privacy Policy</a>
-            <span>·</span>
-            <a href="${links.contact}">Terms of Service</a>
-            <span>·</span>
-            <a href="${links.contact}">Cookie Policy</a>
-          </p>
-        </div>
-      </footer>
-    </section>
-    `
-  );
+      </header>
+      `
+    );
 
-  const overlay = document.getElementById("navOverlay");
-  const reservePanel = document.getElementById("reservePanel");
-  const menuButtons = [...document.querySelectorAll(".js-menu")];
+    mount(
+      "footer",
+      `
+      <section class="escape page-end">
+        <div class="escape-bg" data-parallax="0.25">
+          <img src="${root}images/savanna-sunset.jpg" alt="" />
+        </div>
+        <div class="escape-veil"></div>
+        <div class="escape-card" data-parallax="0.04">
+          <div class="escape-copy">
+            <h2>Ready for Kenya?</h2>
+            <p>Ask the agent for a route — or book a Chikoh safari, lodge, and transfer in the same conversation.</p>
+            <button class="btn btn-dark js-reserve" type="button">Plan My Trip</button>
+          </div>
+          <div class="escape-photo">
+            <img src="${root}images/traveler-kenya.jpg" alt="Traveler watching a Kenyan sunset" />
+          </div>
+        </div>
+        <footer class="site-footer">
+          <div class="footer-brand">
+            <a href="${links.home}" class="brand" aria-label="TripsToKenya home">
+              <img src="${logo}" alt="TripsToKenya" />
+            </a>
+            <p>An AI travel agent for Kenyan destinations that leave unforgettable memories. Also featuring Kenya Chikoh Tours Safaris &amp; Explorers.</p>
+          </div>
+          <div class="footer-cols">
+            <div>
+              <h4>Explore</h4>
+              <a href="${links.destinations}">Destinations</a>
+              <a href="${links.hotels}">Hotels</a>
+              <a href="${links.editors}">Editor’s Choice</a>
+              <a href="${links.story}">Our Story</a>
+            </div>
+            <div>
+              <h4>Chikoh Safaris</h4>
+              <a href="${links.packages}">Packages</a>
+              <a href="${links.activities}">Activities</a>
+              <a href="${links.lodges}">Lodges</a>
+              <a href="${links.transport}">Transport</a>
+              <a href="${links.payment}">Payment</a>
+            </div>
+            <div>
+              <h4>Support</h4>
+              <a href="${links.contact}">Contact</a>
+              <a href="${links.payment}">Paybill &amp; Bank</a>
+              <a href="tel:+254721425858">+254 721 425 858</a>
+              <a href="mailto:kenyachikohsafaris@gmail.com">Email the desk</a>
+            </div>
+          </div>
+          <div class="footer-base">
+            <p>© 2026 TripsToKenya. Chikoh content used with permission of the operator.</p>
+            <p>
+              <a href="${links.contact}">Privacy Policy</a>
+              <span>·</span>
+              <a href="${links.contact}">Terms of Service</a>
+              <span>·</span>
+              <a href="${links.payment}">Payment</a>
+            </p>
+          </div>
+        </footer>
+      </section>
+      `
+    );
+  };
 
   const setMenu = (open) => {
+    const overlay = document.getElementById("navOverlay");
     if (!overlay) return;
     overlay.classList.toggle("is-open", open);
     overlay.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("menu-open", open);
-    menuButtons.forEach((btn) => {
+    document.querySelectorAll(".js-menu").forEach((btn) => {
       btn.classList.toggle("is-open", open);
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (btn.classList.contains("menu-btn")) {
         btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       }
     });
-    if (!open && reservePanel?.hidden) document.body.style.overflow = "";
+    const reserve = document.getElementById("reservePanel");
     if (open) document.body.style.overflow = "hidden";
+    else if (reserve?.hidden) document.body.style.overflow = "";
   };
 
   const openReserve = () => {
-    if (!reservePanel) return;
+    const reserve = document.getElementById("reservePanel");
+    if (!reserve) return;
     setMenu(false);
-    reservePanel.hidden = false;
+    reserve.hidden = false;
     document.body.style.overflow = "hidden";
   };
 
   const closeReserve = () => {
-    if (!reservePanel) return;
-    reservePanel.hidden = true;
+    const reserve = document.getElementById("reservePanel");
+    const overlay = document.getElementById("navOverlay");
+    if (!reserve) return;
+    reserve.hidden = true;
     if (!overlay?.classList.contains("is-open")) document.body.style.overflow = "";
   };
 
-  menuButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setMenu(!overlay.classList.contains("is-open"));
+  const closePanels = () => {
+    document.querySelectorAll(".sheet.is-open").forEach((el) => el.classList.remove("is-open"));
+    document.querySelector(".catalog-host")?.classList.remove("is-dimmed");
+  };
+
+  const openPanel = (id) => {
+    closePanels();
+    const sheet = document.getElementById(id);
+    if (!sheet) return;
+    sheet.classList.add("is-open");
+    document.querySelector(".catalog-host")?.classList.add("is-dimmed");
+    sheet.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  };
+
+  const bindUi = () => {
+    document.querySelectorAll(".js-menu").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const overlay = document.getElementById("navOverlay");
+        setMenu(!overlay?.classList.contains("is-open"));
+      });
     });
+
+    document.querySelector(".nav-overlay-inner")?.addEventListener("click", (e) => {
+      if (e.target === e.currentTarget) setMenu(false);
+    });
+
+    document.querySelectorAll(".js-reserve").forEach((btn) => {
+      btn.addEventListener("click", openReserve);
+    });
+
+    document.getElementById("reserveClose")?.addEventListener("click", closeReserve);
+    document.getElementById("reservePanel")?.addEventListener("click", (e) => {
+      if (e.target.id === "reservePanel") closeReserve();
+    });
+
+    document.getElementById("navOverlay")?.querySelectorAll("[data-nav]").forEach((link) => {
+      if (link.dataset.nav === currentPage()) link.classList.add("is-current");
+    });
+
+    document.getElementById("reserveForm")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const note = document.getElementById("reserveNote");
+      if (!note) return;
+      note.hidden = false;
+      note.textContent =
+        "Request received. Your TripsToKenya / Chikoh desk will confirm lodges, transfers, and a route within a few minutes.";
+    });
+
+    document.querySelectorAll("[data-open-panel]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openPanel(btn.dataset.openPanel);
+      });
+    });
+    document.querySelectorAll("[data-close-panel]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        closePanels();
+      });
+    });
+
+    bindHomeAgent();
+  };
+
+  const bindHomeAgent = () => {
+    const agentForm = document.getElementById("agentForm");
+    const agentInput = document.getElementById("agentInput");
+    const agentReply = document.getElementById("agentReply");
+    const guestCard = document.getElementById("guestCard");
+
+    const stories = [
+      {
+        img: `${pageRoot()}images/avatar-3.jpg`,
+        quote:
+          "The agent built a Mara-to-Diani week we still talk about. Dawn game drive, lunch under an acacia, then the Indian Ocean two days later.",
+      },
+      {
+        img: `${pageRoot()}images/avatar-2.jpg`,
+        quote:
+          "Giraffe Manor on night one, then a bush flight into the Mara. TripsToKenya sequenced it so we never felt rushed — only lucky.",
+      },
+      {
+        img: `${pageRoot()}images/avatar-4.jpg`,
+        quote:
+          "Traveling with three kids usually means compromise. The family Amboseli circuit gave us elephants at breakfast and a lodge that actually understood children.",
+      },
+      {
+        img: `${pageRoot()}images/avatar-1.jpg`,
+        quote:
+          "I asked for Lamu and a little nothing-to-do. The editor’s house, a dhow at dusk, and a cook who already knew I don’t eat shellfish.",
+      },
+    ];
+    let storyIndex = 0;
+
+    const replies = [
+      {
+        test: /mara|safari|tent|wildlife|migration/i,
+        title: "Maasai Mara · luxury tented camp",
+        body: "Three nights on the escarpment during migration season, private guide, and a bush flight from Nairobi.",
+      },
+      {
+        test: /tsavo|voi|salt|chikoh/i,
+        title: "Tsavo with Chikoh Safaris",
+        body: "One to three days in Tsavo East and West — Voi, Kilaguni or Salt Lick — with airport transfer and a pop-top game drive.",
+      },
+      {
+        test: /diani|beach|romantic|villa|coast|honeymoon/i,
+        title: "Diani Beach · private villa",
+        body: "A staffed beach villa on the south coast after safari. Best paired with two nights in the Mara or Tsavo.",
+      },
+      {
+        test: /family|kids|amboseli|nairobi|giraffe/i,
+        title: "Family circuit · Nairobi to Amboseli",
+        body: "Giraffe Manor on arrival, then Amboseli for elephants and Kilimanjaro views.",
+      },
+    ];
+
+    const askAgent = (query) => {
+      if (!agentInput || !agentReply) return;
+      const q = (query || "").trim();
+      if (!q) return;
+      agentInput.value = q;
+      const match = replies.find((item) => item.test.test(q));
+      const result = match || {
+        title: "Custom Kenya route",
+        body: "I can shape that around ideal locations, Chikoh lodges, and an editor’s sequence. Share dates or tap Plan Your Trip.",
+      };
+      agentReply.hidden = false;
+      agentReply.innerHTML = `<strong>${result.title}</strong>${result.body}`;
+    };
+
+    agentForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      askAgent(agentInput.value);
+    });
+    document.querySelectorAll("#suggestions [data-query]").forEach((btn) => {
+      btn.addEventListener("click", () => askAgent(btn.dataset.query));
+    });
+    document.getElementById("nextStory")?.addEventListener("click", () => {
+      if (!guestCard) return;
+      storyIndex = (storyIndex + 1) % stories.length;
+      const next = stories[storyIndex];
+      guestCard.querySelector("img").src = next.img;
+      guestCard.querySelector("p").textContent = next.quote;
+    });
+
+    document
+      .querySelectorAll(
+        ".story, .overview-intro, .retreat-card, .overview-meta, .escape-card, .story-photos, .place-card, .hotel-card, .editors-copy, .editors-card, .section-head, .chikoh-card"
+      )
+      .forEach((el) => el.classList.add("reveal"));
+  };
+
+  const motion = {
+    mx: 0,
+    my: 0,
+    tx: 0,
+    ty: 0,
+    ticking: false,
+    glow: null,
+    heroMedia: null,
+    depthNodes: [],
+    parallaxNodes: [],
+    bound: false,
+  };
+
+  const renderMotion = () => {
+    motion.ticking = false;
+    motion.tx += (motion.mx - motion.tx) * 0.08;
+    motion.ty += (motion.my - motion.ty) * 0.08;
+    if (motion.heroMedia) {
+      motion.heroMedia.style.transform = `translate3d(${motion.tx * 18}px, ${window.scrollY * 0.18 + motion.ty * 12}px, 0) scale(1.08)`;
+    }
+    motion.depthNodes.forEach((node) => {
+      if (!node.isConnected) return;
+      const depth = parseFloat(node.dataset.depth || "0");
+      node.style.transform = `translate3d(${motion.tx * depth * 80}px, ${motion.ty * depth * 60}px, 0)`;
+    });
+    const vh = window.innerHeight;
+    motion.parallaxNodes.forEach((node) => {
+      if (!node.isConnected || node === motion.heroMedia) return;
+      const speed = parseFloat(node.dataset.parallax || "0");
+      const rect = node.getBoundingClientRect();
+      const offset = (rect.top + rect.height / 2 - vh / 2) * speed * -1;
+      node.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+    });
+    if (motion.glow) {
+      motion.glow.style.left = `${(motion.mx + 0.5) * window.innerWidth}px`;
+      motion.glow.style.top = `${(motion.my + 0.5) * window.innerHeight}px`;
+    }
+  };
+
+  const requestMotion = (e) => {
+    if (e && e.type === "pointermove") {
+      motion.mx = e.clientX / window.innerWidth - 0.5;
+      motion.my = e.clientY / window.innerHeight - 0.5;
+    }
+    if (!motion.ticking) {
+      motion.ticking = true;
+      requestAnimationFrame(renderMotion);
+    }
+  };
+
+  const bindMotion = () => {
+    if (io) io.disconnect();
+    document.querySelectorAll(".reveal-on").forEach((el) => el.classList.add("reveal"));
+    io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.14 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+    motion.glow = document.querySelector(".cursor-glow");
+    motion.heroMedia = document.querySelector(".hero-media, .page-hero-media");
+    motion.depthNodes = [...document.querySelectorAll("[data-depth]")];
+    motion.parallaxNodes = [...document.querySelectorAll("[data-parallax]")];
+
+    if (reduce) return;
+    if (!motion.bound) {
+      window.addEventListener("pointermove", requestMotion, { passive: true });
+      window.addEventListener("scroll", requestMotion, { passive: true });
+      window.addEventListener("resize", requestMotion);
+      motion.bound = true;
+    }
+    requestMotion();
+  };
+
+  const boot = () => {
+    injectChrome();
+    bindUi();
+    bindMotion();
+  };
+
+  const isInternal = (anchor) => {
+    if (!anchor || !anchor.getAttribute("href")) return false;
+    const href = anchor.getAttribute("href");
+    if (href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("#")) return false;
+    if (anchor.hasAttribute("download")) return false;
+    const url = new URL(anchor.href, location.href);
+    if (url.origin !== location.origin) return false;
+    if (/\.(jpg|jpeg|png|gif|webp|pdf|svg)$/i.test(url.pathname)) return false;
+    return true;
+  };
+
+  const navigate = async (href, push = true) => {
+    const url = new URL(href, location.href);
+    if (url.pathname === location.pathname && url.hash) {
+      document.querySelector(url.hash)?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    document.body.classList.add("is-routing");
+    try {
+      const res = await fetch(url.pathname + url.search, { headers: { "X-Requested-With": "same-window" } });
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      if (push) history.pushState({ href: url.href }, "", url.pathname + url.search + url.hash);
+      document.title = doc.title;
+      document.body.className = `${doc.body.className} is-routing`;
+      document.body.dataset.page = doc.body.dataset.page || "";
+      document.body.dataset.root = doc.body.dataset.root || "";
+      document.body.innerHTML = doc.body.innerHTML;
+      boot();
+      window.scrollTo(0, 0);
+      if (url.hash) {
+        requestAnimationFrame(() => document.querySelector(url.hash)?.scrollIntoView());
+      }
+    } catch (err) {
+      location.assign(url.href);
+      return;
+    }
+    requestAnimationFrame(() => document.body.classList.remove("is-routing"));
+  };
+
+  document.addEventListener("click", (e) => {
+    const anchor = e.target.closest("a[href]");
+    if (!anchor) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    anchor.setAttribute("target", "_self");
+    if (!isInternal(anchor)) return;
+    e.preventDefault();
+    setMenu(false);
+    closeReserve();
+    navigate(anchor.getAttribute("href"));
   });
 
-  overlay?.querySelector(".nav-overlay-inner")?.addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) setMenu(false);
-  });
-
-  overlay?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => setMenu(false));
-  });
-
-  document.querySelectorAll(".js-reserve").forEach((btn) => {
-    btn.addEventListener("click", openReserve);
-  });
-
-  document.getElementById("reserveClose")?.addEventListener("click", closeReserve);
-  reservePanel?.addEventListener("click", (e) => {
-    if (e.target === reservePanel) closeReserve();
+  window.addEventListener("popstate", () => {
+    navigate(location.href, false);
   });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       setMenu(false);
       closeReserve();
+      closePanels();
     }
   });
 
-  overlay?.querySelectorAll("[data-nav]").forEach((link) => {
-    if (link.dataset.nav === page) link.classList.add("is-current");
-  });
-
-  const form = document.getElementById("reserveForm");
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const note = document.getElementById("reserveNote");
-    if (!note) return;
-    note.hidden = false;
-    note.textContent =
-      "Request received. Your TripsToKenya agent will confirm lodges, flights, and an editor’s route within a few minutes.";
-  });
-
-  document.querySelectorAll(".reveal-on").forEach((el) => el.classList.add("reveal"));
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.14 }
-  );
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-
-  if (reduce) return;
-
-  const glow = document.querySelector(".cursor-glow");
-  const heroMedia = document.querySelector(".hero-media, .page-hero-media");
-  let mx = 0;
-  let my = 0;
-  let tx = 0;
-  let ty = 0;
-  let ticking = false;
-  const depthNodes = [...document.querySelectorAll("[data-depth]")];
-  const parallaxNodes = [...document.querySelectorAll("[data-parallax]")];
-
-  const render = () => {
-    ticking = false;
-    tx += (mx - tx) * 0.08;
-    ty += (my - ty) * 0.08;
-
-    if (heroMedia) {
-      heroMedia.style.transform = `translate3d(${tx * 18}px, ${window.scrollY * 0.18 + ty * 12}px, 0) scale(1.08)`;
-    }
-
-    depthNodes.forEach((node) => {
-      const depth = parseFloat(node.dataset.depth || "0");
-      node.style.transform = `translate3d(${tx * depth * 80}px, ${ty * depth * 60}px, 0)`;
-    });
-
-    const vh = window.innerHeight;
-    parallaxNodes.forEach((node) => {
-      if (node === heroMedia) return;
-      const speed = parseFloat(node.dataset.parallax || "0");
-      const rect = node.getBoundingClientRect();
-      const offset = (rect.top + rect.height / 2 - vh / 2) * speed * -1;
-      node.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
-    });
-
-    if (glow) {
-      glow.style.left = `${(mx + 0.5) * window.innerWidth}px`;
-      glow.style.top = `${(my + 0.5) * window.innerHeight}px`;
-    }
-  };
-
-  const requestTick = () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(render);
-    }
-  };
-
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      mx = e.clientX / window.innerWidth - 0.5;
-      my = e.clientY / window.innerHeight - 0.5;
-      requestTick();
-    },
-    { passive: true }
-  );
-  window.addEventListener("scroll", requestTick, { passive: true });
-  window.addEventListener("resize", requestTick);
-  requestTick();
+  boot();
 })();

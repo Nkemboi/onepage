@@ -1259,7 +1259,9 @@ a.editors-card {
   .site-footer,
   .place-grid,
   .hotel-grid,
-  .editors-grid {
+  .editors-grid,
+  .overlay-split,
+  .sheet-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1353,9 +1355,15 @@ a.editors-card {
   .overview,
   .escape,
   .hotels,
-  .editors {
+  .editors,
+  .chikoh-band {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  .overlay-split,
+  .sheet-grid {
+    grid-template-columns: 1fr;
   }
 
   .footer-cols,
@@ -1533,6 +1541,10 @@ a.hotel-card {
 
 .catalog {
   padding: 28px 0 8px;
+}
+
+.catalog .place-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .catalog .place-grid,
