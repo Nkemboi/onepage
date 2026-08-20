@@ -40,18 +40,33 @@
           <button class="nav-close js-menu" type="button" aria-label="Close menu">
             <span></span><span></span>
           </button>
-          <nav class="overlay-links overlay-unified">
-            <a href="${links.home}" data-nav="home">Home</a>
-            <a href="${links.destinations}" data-nav="destinations">Destinations</a>
-            <a href="${links.hotels}" data-nav="hotels">Hotels</a>
-            <a href="${links.packages}" data-nav="packages">Packages</a>
-            <a href="${links.activities}" data-nav="activities">Activities</a>
-            <a href="${links.lodges}" data-nav="lodges">Lodges</a>
-            <a href="${links.transport}" data-nav="transport">Transport</a>
-            <a href="${links.editors}" data-nav="editors">Editor’s Choice</a>
-            <a href="${links.info}" data-nav="info">Important Information</a>
-            <a href="${links.story}" data-nav="story">Our Story</a>
-            <a href="${links.payment}" data-nav="payment">Payment</a>
+          <nav class="overlay-menu">
+            <a href="${links.home}" class="overlay-home" data-nav="home">Home</a>
+            <div class="overlay-cols">
+              <div>
+                <h4>Explore</h4>
+                <a href="${links.destinations}" data-nav="destinations">Destinations</a>
+                <a href="${links.hotels}" data-nav="hotels">Hotels</a>
+                <a href="${links.packages}" data-nav="packages">Packages</a>
+                <a href="${links.activities}" data-nav="activities">Activities</a>
+                <a href="${links.lodges}" data-nav="lodges">Lodges</a>
+                <a href="${links.transport}" data-nav="transport">Transport</a>
+              </div>
+              <div>
+                <h4>Plan</h4>
+                <a href="${links.editors}" data-nav="editors">Editor’s Choice</a>
+                <a href="${links.info}" data-nav="info">Important Information</a>
+                <a href="${links.story}" data-nav="story">Our Story</a>
+                <a href="${links.payment}" data-nav="payment">Payment</a>
+                <a href="${links.contact}" data-nav="contact">Contact</a>
+              </div>
+              <div>
+                <h4>Desk</h4>
+                <a href="${links.contact}">Help Center</a>
+                <a href="tel:+254721425858">+254 721 425 858</a>
+                <a href="mailto:kenyachikohsafaris@gmail.com">Email the desk</a>
+              </div>
+            </div>
             <button class="overlay-cta js-reserve" type="button">Plan Your Trip</button>
           </nav>
         </div>

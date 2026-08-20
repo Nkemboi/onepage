@@ -180,12 +180,13 @@ a {
   z-index: 90;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background: rgba(10, 12, 16, 0.38);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
   border-radius: 999px;
-  padding: 10px 16px 10px 13px;
+  padding: 10px 16px;
   font-size: 13px;
   font-weight: 500;
   backdrop-filter: blur(16px);
@@ -1118,32 +1119,57 @@ a.retreat-card {
   place-items: center;
 }
 
-.overlay-links {
-  display: grid;
-  gap: 18px;
-  text-align: center;
+.overlay-menu {
+  width: min(860px, 86vw);
+  text-align: left;
 }
 
-.overlay-links a {
-  font-size: clamp(28px, 5vw, 48px);
+.overlay-home {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: clamp(22px, 3vw, 32px);
   font-weight: 600;
   letter-spacing: -0.04em;
 }
 
-.overlay-links a.is-current {
+.overlay-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 40px;
+}
+
+.overlay-cols h4 {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.overlay-cols a {
+  display: block;
+  margin: 8px 0;
+  font-size: clamp(16px, 2.1vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.overlay-menu a.is-current {
   opacity: 0.45;
 }
 
 .overlay-cta {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
+  display: inline-flex;
+  margin-top: 28px;
   border: 0;
-  background: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 18px;
+  background: #fff;
+  color: #111;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   cursor: pointer;
 }
 
@@ -1261,6 +1287,7 @@ a.editors-card {
   .hotel-grid,
   .editors-grid,
   .overlay-unified,
+  .overlay-cols,
   .sheet-grid,
   .pager {
     grid-template-columns: 1fr;
@@ -1594,23 +1621,7 @@ body.menu-open {
 }
 
 .overlay-unified {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px 48px;
-  text-align: left;
-  width: min(680px, 86vw);
-}
-
-.overlay-unified a {
-  display: block;
-  font-size: clamp(18px, 2.6vw, 28px);
-  margin: 6px 0;
-}
-
-.overlay-unified .overlay-cta {
-  grid-column: 1 / -1;
-  text-align: left;
-  padding: 8px 0 0;
+  display: none;
 }
 
 .chikoh-band {
@@ -1740,6 +1751,166 @@ body.is-enter .site-header {
 @keyframes fadeUp {
   from { opacity: 0; transform: translate3d(0, 18px, 0); }
   to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 720px) {
+  .site-header {
+    padding: 8px 8px 0;
+  }
+
+  .site-header .topbar {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .site-header .brand img {
+    height: 40px;
+  }
+
+  .site-header .btn-light {
+    padding: 8px 11px;
+    font-size: 11px;
+  }
+
+  .menu-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .menu-btn > * {
+    grid-area: 1 / 1;
+  }
+
+  .menu-btn .burger {
+    margin: 0;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .overlay-cols {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .page-hero {
+    min-height: 46vh;
+    margin: 8px;
+    border-radius: 20px;
+  }
+
+  .page-hero-copy {
+    padding: 28px 20px 26px;
+  }
+
+  .page-hero-copy h1 {
+    font-size: clamp(28px, 9vw, 40px);
+  }
+
+  .page-hero-copy .lede {
+    font-size: 14px;
+    max-width: none;
+  }
+
+  .page-main {
+    padding: 28px 16px 32px;
+    border-radius: 24px 24px 0 0;
+    overflow: hidden;
+  }
+
+  .catalog-host,
+  .sheet,
+  .place-card {
+    max-width: 100%;
+  }
+
+  .catalog {
+    padding: 0;
+  }
+
+  .catalog .place-grid,
+  .place-grid.catalog,
+  .place-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+
+  .place-card,
+  .place-card div {
+    min-height: 220px;
+  }
+
+  .place-card h3 {
+    font-size: 19px;
+    overflow-wrap: anywhere;
+  }
+
+  .sheet {
+    margin-top: 0;
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .sheet-grid,
+  .pager,
+  .overlay-unified {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sheet-grid {
+    gap: 16px;
+  }
+
+  .sheet-grid img {
+    height: 200px;
+  }
+
+  .prose h2 {
+    font-size: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  .pager {
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .pager-link {
+    padding: 14px 16px;
+  }
+
+  .pager-link.next {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .pager-link strong {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .footer-brand .brand img {
+    height: 72px;
+  }
+
+  .escape-card {
+    min-height: 0;
+  }
+
+  .escape-copy {
+    padding: 28px 22px 8px;
+    max-width: none;
+  }
+
+  .escape-photo {
+    min-height: 220px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
