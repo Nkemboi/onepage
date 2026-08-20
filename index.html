@@ -17,75 +17,9 @@
     <link rel="icon" href="images/logo.png" type="image/png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-root="" data-page="home">
     <div class="cursor-glow" aria-hidden="true"></div>
-
-    <div class="nav-overlay" id="navOverlay" hidden>
-      <div class="nav-overlay-inner">
-        <button class="nav-close" id="navClose" aria-label="Close menu">
-          <span></span><span></span>
-        </button>
-        <nav class="overlay-links">
-          <a href="#story" data-nav>Our Story</a>
-          <a href="#locations" data-nav>Destinations</a>
-          <a href="#hotels" data-nav>Hotels</a>
-          <a href="#editors" data-nav>Editor’s Choice</a>
-          <a href="#cta" class="overlay-cta" data-nav>Plan Your Trip</a>
-        </nav>
-      </div>
-    </div>
-
-    <div class="reserve-panel" id="reservePanel" hidden>
-      <div class="reserve-card">
-        <button class="icon-close" id="reserveClose" aria-label="Close trip planner">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-          </svg>
-        </button>
-        <p class="eyebrow">TripsToKenya</p>
-        <h3>Plan Your Trip</h3>
-        <p class="reserve-lead">Tell us when you want Kenya. Our AI agent will curate locations, lodges, and an editor’s route.</p>
-        <form id="reserveForm">
-          <label>
-            Destination
-            <select name="destination" required>
-              <option value="mara">Maasai Mara</option>
-              <option value="amboseli">Amboseli</option>
-              <option value="diani">Diani Beach</option>
-              <option value="lamu">Lamu Archipelago</option>
-              <option value="nairobi">Nairobi &amp; Highlands</option>
-            </select>
-          </label>
-          <div class="form-row">
-            <label>
-              Arrival
-              <input type="date" name="checkin" required />
-            </label>
-            <label>
-              Departure
-              <input type="date" name="checkout" required />
-            </label>
-          </div>
-          <div class="form-row">
-            <label>
-              Travelers
-              <input type="number" name="guests" min="1" max="16" value="2" />
-            </label>
-            <label>
-              Style
-              <select name="type">
-                <option>Wildlife Safari</option>
-                <option>Coast Escape</option>
-                <option>Family Circuit</option>
-                <option>Honeymoon</option>
-              </select>
-            </label>
-          </div>
-          <button type="submit" class="btn btn-dark btn-full">Ask the Agent</button>
-        </form>
-        <p class="reserve-note" id="reserveNote" hidden></p>
-      </div>
-    </div>
+    <div data-include="overlays"></div>
 
     <header class="hero" id="top">
       <div class="hero-frame">
@@ -95,14 +29,14 @@
         <div class="hero-shade"></div>
 
         <div class="topbar">
-          <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+          <button class="menu-btn js-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
             <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
-            Menu
+            <span class="menu-label">Menu</span>
           </button>
-          <a href="#top" class="brand" aria-label="TripsToKenya home">
+          <a href="index.html" class="brand" aria-label="TripsToKenya home">
             <img src="images/logo.png" alt="TripsToKenya" />
           </a>
-          <button class="btn btn-light" id="reserveBtn">Plan Your Trip</button>
+          <button class="btn btn-light js-reserve" type="button">Plan Your Trip</button>
         </div>
 
         <div class="hero-copy">
@@ -210,7 +144,7 @@
           <p>Trusted by Leading<br />Kenyan Lodges</p>
         </div>
 
-        <a href="#story" class="our-story">Our Story</a>
+        <a href="story.html" class="our-story">Our Story</a>
       </div>
     </header>
 
@@ -262,38 +196,38 @@
       </div>
 
       <div class="place-grid">
-        <article class="place-card" data-parallax="-0.04">
+        <a class="place-card" href="destinations/maasai-mara.html" data-parallax="-0.04">
           <img src="images/mara-landscape.jpg" alt="Maasai Mara savanna" />
           <div>
             <span>Wildlife</span>
             <h3>Maasai Mara</h3>
             <p>The great migration, big cats, and golden light on open plains.</p>
           </div>
-        </article>
-        <article class="place-card" data-parallax="0.05">
-          <img src="images/safari-guest.jpg" alt="Safari vehicle at sunrise" />
+        </a>
+        <a class="place-card" href="destinations/amboseli.html" data-parallax="0.05">
+          <img src="images/amboseli.jpg" alt="Elephants in Amboseli" />
           <div>
             <span>Elephants</span>
             <h3>Amboseli</h3>
             <p>Herds beneath Kilimanjaro and some of Kenya’s clearest dawns.</p>
           </div>
-        </article>
-        <article class="place-card" data-parallax="-0.03">
+        </a>
+        <a class="place-card" href="destinations/diani.html" data-parallax="-0.03">
           <img src="images/diani-beach.jpg" alt="Diani Beach coastline" />
           <div>
             <span>Coast</span>
             <h3>Diani Beach</h3>
             <p>White sand, warm Indian Ocean, and villas made for long afternoons.</p>
           </div>
-        </article>
-        <article class="place-card" data-parallax="0.06">
+        </a>
+        <a class="place-card" href="destinations/lamu.html" data-parallax="0.06">
           <img src="images/hotel-lamu.jpg" alt="Lamu waterfront" />
           <div>
             <span>Culture</span>
             <h3>Lamu</h3>
             <p>Dhows, coral-stone houses, and a slower Swahili rhythm.</p>
           </div>
-        </article>
+        </a>
       </div>
 
       <div class="overview-grid featured-block">
@@ -303,7 +237,7 @@
           <p class="lede">
             Whether you want a first safari, a honeymoon circuit, or a family week that mixes wildlife and the coast, we shape the days so Kenya feels effortless.
           </p>
-          <a href="#cta" class="btn btn-dark explore-btn">
+          <a href="destinations.html" class="btn btn-dark explore-btn">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.4" />
               <path d="M8 4.5v3.2L10.4 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
@@ -312,14 +246,14 @@
           </a>
         </div>
 
-        <article class="retreat-card" data-parallax="-0.06">
+        <a class="retreat-card" href="destinations/maasai-mara.html" data-parallax="-0.06">
           <img src="images/mara-landscape.jpg" alt="Golden light over the Maasai Mara" />
           <span class="badge">Ideal Location</span>
           <div class="retreat-copy">
             <h3>Maasai Mara at Golden Hour</h3>
             <p>Open-vehicle game drives, sundowners on the escarpment, and lodges that look out over the migration corridor.</p>
           </div>
-        </article>
+        </a>
 
         <aside class="overview-meta" data-parallax="0.08">
           <dl>
@@ -363,30 +297,30 @@
         <p class="lede muted">Hand-picked lodges and houses — not a directory. The agent holds rooms that match the route.</p>
       </div>
       <div class="hotel-grid">
-        <article class="hotel-card" data-parallax="0.05">
+        <a class="hotel-card" href="hotels/giraffe-manor.html" data-parallax="0.05">
           <img src="images/hotel-giraffe.jpg" alt="Giraffe Manor breakfast terrace" />
           <div>
             <span>Nairobi</span>
             <h3>Giraffe Manor</h3>
             <p>A stone manor breakfast with Rothschild giraffes — the classic opening night before safari.</p>
           </div>
-        </article>
-        <article class="hotel-card" data-parallax="-0.04">
+        </a>
+        <a class="hotel-card" href="hotels/escarpment-camp.html" data-parallax="-0.04">
           <img src="images/hotel-camp.jpg" alt="Luxury tented camp in the Mara" />
           <div>
             <span>Maasai Mara</span>
             <h3>Escarpment Camp</h3>
             <p>Canvas suites, brass lanterns, and a deck that looks straight onto the plains.</p>
           </div>
-        </article>
-        <article class="hotel-card" data-parallax="0.06">
+        </a>
+        <a class="hotel-card" href="hotels/peponi-house.html" data-parallax="0.06">
           <img src="images/hotel-lamu.jpg" alt="Swahili boutique hotel in Lamu" />
           <div>
             <span>Lamu</span>
             <h3>Peponi House</h3>
             <p>Coral-stone rooms, carved doors, and dhow sunsets on the channel.</p>
           </div>
-        </article>
+        </a>
       </div>
     </section>
 
@@ -403,16 +337,16 @@
             <li>Bush flight to the Mara · luxury tented camp</li>
             <li>Diani Beach villa · ocean and nothing else</li>
           </ul>
-          <button class="btn btn-dark" id="planStayBtn">Plan This Route</button>
+          <a class="btn btn-dark" href="editors.html">Read the Circuit</a>
         </div>
-        <article class="editors-card" data-parallax="-0.05">
+        <a class="editors-card" href="editors.html" data-parallax="-0.05">
           <img src="images/hotel-giraffe.jpg" alt="Editor’s choice stay in Nairobi" />
           <span class="badge">Editor’s Choice 2026</span>
           <div class="retreat-copy">
             <h3>The Memory Circuit</h3>
             <p>Safari, manor, and coast — sequenced so each place has time to land.</p>
           </div>
-        </article>
+        </a>
       </div>
     </section>
 
@@ -426,7 +360,7 @@
         <div class="escape-copy">
           <h2>Ready for Kenya?</h2>
           <p>Ask the agent for a route built around unforgettable places — ideal locations, the right hotels, and an editor’s sequence designed for how you travel.</p>
-          <button class="btn btn-dark" id="planEscapeBtn">Plan My Trip</button>
+          <button class="btn btn-dark js-reserve" type="button">Plan My Trip</button>
         </div>
         <div class="escape-photo">
           <img src="images/traveler-kenya.jpg" alt="Traveler watching a Kenyan sunset" />
@@ -435,7 +369,7 @@
 
       <footer class="site-footer">
         <div class="footer-brand">
-          <a href="#top" class="brand" aria-label="TripsToKenya home">
+          <a href="index.html" class="brand" aria-label="TripsToKenya home">
             <img src="images/logo.png" alt="TripsToKenya" />
           </a>
           <p>An AI travel agent for Kenyan destinations that leave unforgettable memories. Destinations that inspire.</p>
@@ -443,39 +377,40 @@
         <div class="footer-cols">
           <div>
             <h4>Explore</h4>
-            <a href="#locations">Destinations</a>
-            <a href="#hotels">Hotels</a>
-            <a href="#editors">Editor’s Choice</a>
-            <a href="#story">Our Story</a>
+            <a href="destinations.html">Destinations</a>
+            <a href="hotels.html">Hotels</a>
+            <a href="editors.html">Editor’s Choice</a>
+            <a href="story.html">Our Story</a>
           </div>
           <div>
             <h4>Support</h4>
-            <a href="#cta">Help Center</a>
-            <a href="#cta">Booking Policy</a>
-            <a href="#cta">Cancellation</a>
-            <a href="#cta">Contact</a>
+            <a href="contact.html">Help Center</a>
+            <a href="contact.html">Booking Policy</a>
+            <a href="contact.html">Cancellation</a>
+            <a href="contact.html">Contact</a>
           </div>
           <div>
             <h4>Company</h4>
-            <a href="#story">About Us</a>
-            <a href="#story">Careers</a>
-            <a href="#story">Partners</a>
-            <a href="#story">Press</a>
+            <a href="story.html">About Us</a>
+            <a href="story.html">Careers</a>
+            <a href="contact.html">Partners</a>
+            <a href="contact.html">Press</a>
           </div>
         </div>
         <div class="footer-base">
           <p>© 2026 TripsToKenya. All rights reserved.</p>
           <p>
-            <a href="#top">Privacy Policy</a>
+            <a href="contact.html">Privacy Policy</a>
             <span>·</span>
-            <a href="#top">Terms of Service</a>
+            <a href="contact.html">Terms of Service</a>
             <span>·</span>
-            <a href="#top">Cookie Policy</a>
+            <a href="contact.html">Cookie Policy</a>
           </p>
         </div>
       </footer>
     </section>
 
     <script src="script.js"></script>
+    <script src="site.js"></script>
   </body>
 </html>
