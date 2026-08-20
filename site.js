@@ -465,6 +465,29 @@
     bindMotion();
   };
 
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const ensureVeil = () => {
+    let veil = document.querySelector(".page-veil");
+    if (!veil) {
+      veil = document.createElement("div");
+      veil.className = "page-veil";
+      veil.setAttribute("aria-hidden", "true");
+      veil.innerHTML = `
+        <div class="page-veil-panel">
+          <span class="page-veil-line"></span>
+          <img class="page-veil-mark" src="${pageRoot()}images/logo.png" alt="" />
+        </div>
+      `;
+      document.documentElement.appendChild(veil);
+    }
+    const mark = veil.querySelector(".page-veil-mark");
+    if (mark) mark.src = `${pageRoot()}images/logo.png`;
+    return veil;
+  };
+
+  let routing = false;
+
   const isInternal = (anchor) => {
     if (!anchor || !anchor.getAttribute("href")) return false;
     const href = anchor.getAttribute("href");
@@ -482,14 +505,24 @@
       document.querySelector(url.hash)?.scrollIntoView({ behavior: "smooth" });
       return;
     }
-    document.body.classList.add("is-routing");
+    if (url.pathname === location.pathname && !url.hash) return;
+    if (routing) return;
+    routing = true;
+
+    const veil = ensureVeil();
+    veil.classList.remove("is-uncovering");
+    void veil.offsetWidth;
+    veil.classList.add("is-covering");
+    if (!reduce) await wait(620);
+
     try {
       const res = await fetch(url.pathname + url.search, { headers: { "X-Requested-With": "same-window" } });
+      if (!res.ok) throw new Error(res.status);
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, "text/html");
       if (push) history.pushState({ href: url.href }, "", url.pathname + url.search + url.hash);
       document.title = doc.title;
-      document.body.className = `${doc.body.className} is-routing`;
+      document.body.className = `${doc.body.className} is-enter`;
       document.body.dataset.page = doc.body.dataset.page || "";
       document.body.dataset.root = doc.body.dataset.root || "";
       document.body.innerHTML = doc.body.innerHTML;
@@ -499,10 +532,20 @@
         requestAnimationFrame(() => document.querySelector(url.hash)?.scrollIntoView());
       }
     } catch (err) {
+      routing = false;
+      veil.classList.remove("is-covering");
       location.assign(url.href);
       return;
     }
-    requestAnimationFrame(() => document.body.classList.remove("is-routing"));
+
+    requestAnimationFrame(() => {
+      veil.classList.remove("is-covering");
+      veil.classList.add("is-uncovering");
+    });
+    await wait(reduce ? 40 : 720);
+    veil.classList.remove("is-uncovering");
+    document.body.classList.remove("is-enter");
+    routing = false;
   };
 
   document.addEventListener("click", (e) => {
