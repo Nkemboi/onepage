@@ -1353,9 +1353,16 @@ a.editors-card {
   .menu-btn {
     width: 44px;
     height: 44px;
+    min-width: 44px;
     padding: 0;
-    justify-content: center;
-    gap: 0;
+    display: grid;
+    place-items: center;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .menu-btn > * {
+    grid-area: 1 / 1;
   }
 
   .hero-copy {
@@ -1717,9 +1724,10 @@ body.is-enter .site-header {
 
 .pager-link {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px 20px;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px 10px 10px;
   background: #fff;
   border: 0;
   border-radius: 20px;
@@ -1730,18 +1738,40 @@ body.is-enter .site-header {
   font: inherit;
 }
 
+.pager-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 14px;
+  flex: 0 0 72px;
+}
+
+.pager-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
 .pager-link.next {
   text-align: right;
+  justify-content: flex-end;
+  padding: 10px 10px 10px 14px;
+}
+
+.pager-link.next .pager-copy {
   align-items: flex-end;
 }
 
-.pager-link span {
+.pager-copy span,
+.pager-link > span:not(.pager-copy) {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #8b919a;
 }
 
+.pager-copy strong,
 .pager-link strong {
   font-size: 17px;
   letter-spacing: -0.03em;
@@ -1882,12 +1912,22 @@ body.is-enter .site-header {
   }
 
   .pager-link {
-    padding: 14px 16px;
+    padding: 10px;
   }
 
   .pager-link.next {
     text-align: left;
+    justify-content: flex-start;
+  }
+
+  .pager-link.next .pager-copy {
     align-items: flex-start;
+  }
+
+  .pager-thumb {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
   }
 
   .pager-link strong {

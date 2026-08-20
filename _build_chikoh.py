@@ -78,12 +78,18 @@ def cards(items, prefix):
     </div>
     <nav class="pager">
       <button class="pager-link prev" type="button" data-open-panel="panel-{prev_item["id"]}">
-        <span>Previous</span>
-        <strong>{prev_item["title"]}</strong>
+        <img class="pager-thumb" src="{prev_item["img"]}" alt="" />
+        <span class="pager-copy">
+          <span>Previous</span>
+          <strong>{prev_item["title"]}</strong>
+        </span>
       </button>
       <button class="pager-link next" type="button" data-open-panel="panel-{next_item["id"]}">
-        <span>Next</span>
-        <strong>{next_item["title"]}</strong>
+        <span class="pager-copy">
+          <span>Next</span>
+          <strong>{next_item["title"]}</strong>
+        </span>
+        <img class="pager-thumb" src="{next_item["img"]}" alt="" />
       </button>
     </nav>
   </article>'''
