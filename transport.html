@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transport — TripsToKenya</title>
+    <meta name="description" content="Airport transfers, 4x4s, group minivans and in-park game drives from Kenya Chikoh Safaris." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+    <link rel="icon" href="images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="inner" data-root="" data-page="transport">
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div data-include="overlays"></div>
+    <div data-include="header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-media" data-parallax="0.2">
+        <img src="images/chikoh/suv.jpg" alt="Safari 4x4 in Tsavo" />
+      </div>
+      <div class="page-hero-shade"></div>
+      <div class="page-hero-copy">
+        <p class="crumb"><a href="index.html">Home</a> <span>/</span> Chikoh <span>/</span> Transport</p>
+        <h1>Reliable transport</h1>
+        <p class="lede wide">Your journey begins with us — airport transfers and in-park transport, so you can focus on the adventure.</p>
+      </div>
+    </section>
+
+    <main class="page-main">
+      <div class="catalog-host">
+  <div class="place-grid catalog">
+    <button class="place-card" type="button" data-open-panel="panel-suv">
+      <img src="images/chikoh/suv.jpg" alt="4x4 SUVs" />
+      <div>
+        <span>Self or guided</span>
+        <h3>4x4 SUVs</h3>
+        <p>Urban tarmac and Tsavo tracks in the same vehicle.</p>
+      </div>
+    </button>
+    <button class="place-card" type="button" data-open-panel="panel-van">
+      <img src="images/chikoh/minivan.jpg" alt="Minivans for groups" />
+      <div>
+        <span>Groups</span>
+        <h3>Minivans for groups</h3>
+        <p>Pop-top vans for families and friends who want to share the view.</p>
+      </div>
+    </button>
+    <button class="place-card" type="button" data-open-panel="panel-guide">
+      <img src="images/safari-guest.jpg" alt="Personalised tour with a guide" />
+      <div>
+        <span>Private</span>
+        <h3>Personalised tour with a guide</h3>
+        <p>A guide, a comfortable car, and a day built around you.</p>
+      </div>
+    </button>
+    <button class="place-card" type="button" data-open-panel="panel-airport">
+      <img src="images/chikoh/suv.jpg" alt="Airport transfers" />
+      <div>
+        <span>Transfers</span>
+        <h3>Airport transfers</h3>
+        <p>JKIA, Wilson, Moi International — met, and taken where you sleep.</p>
+      </div>
+    </button>
+    <button class="place-card" type="button" data-open-panel="panel-gamedrive">
+      <img src="images/chikoh/suv.jpg" alt="In-park game drives" />
+      <div>
+        <span>In-park</span>
+        <h3>In-park game drives</h3>
+        <p>Pop-top vehicles and a guide who knows Tsavo and the coast parks.</p>
+      </div>
+    </button>
+  </div>
+  <article class="sheet" id="panel-suv">
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
+    <div class="sheet-grid">
+      <img src="images/chikoh/suv.jpg" alt="4x4 SUVs" />
+      <div class="prose">
+        <p class="eyebrow light">Self or guided</p>
+        <h2>4x4 SUVs</h2>
+        <p>Premium 4x4 SUVs for Kenya’s mixed roads — town in the morning, off-road by lunch. Comfort and safety, at your own pace or with a driver-guide.</p>
+        <ul><li>Airport pickup</li><li>Park-ready vehicles</li><li>Driver-guide on request</li></ul>
+        <button class="btn btn-dark js-reserve" type="button">Enquire</button>
+      </div>
+    </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-gamedrive">
+        <img class="pager-thumb" src="images/chikoh/suv.jpg" alt="" />
+        <span class="pager-copy">
+          <span>Previous</span>
+          <strong>In-park game drives</strong>
+        </span>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-van">
+        <span class="pager-copy">
+          <span>Next</span>
+          <strong>Minivans for groups</strong>
+        </span>
+        <img class="pager-thumb" src="images/chikoh/minivan.jpg" alt="" />
+      </button>
+    </nav>
+  </article>
+  <article class="sheet" id="panel-van">
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
+    <div class="sheet-grid">
+      <img src="images/chikoh/minivan.jpg" alt="Minivans for groups" />
+      <div class="prose">
+        <p class="eyebrow light">Groups</p>
+        <h2>Minivans for groups</h2>
+        <p>Spacious safari minivans for group outings. Room for people and bags, pop-up roofs for the parks, and modern comfort on the long tarmac stretches.</p>
+        <ul><li>Families and friends</li><li>Luggage space</li><li>In-park game viewing</li></ul>
+        <button class="btn btn-dark js-reserve" type="button">Enquire</button>
+      </div>
+    </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-suv">
+        <img class="pager-thumb" src="images/chikoh/suv.jpg" alt="" />
+        <span class="pager-copy">
+          <span>Previous</span>
+          <strong>4x4 SUVs</strong>
+        </span>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-guide">
+        <span class="pager-copy">
+          <span>Next</span>
+          <strong>Personalised tour with a guide</strong>
+        </span>
+        <img class="pager-thumb" src="images/safari-guest.jpg" alt="" />
+      </button>
+    </nav>
+  </article>
+  <article class="sheet" id="panel-guide">
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
+    <div class="sheet-grid">
+      <img src="images/safari-guest.jpg" alt="Personalised tour with a guide" />
+      <div class="prose">
+        <p class="eyebrow light">Private</p>
+        <h2>Personalised tour with a guide</h2>
+        <p>For guests who want the day designed: a guide, a sedan or 4x4, city or park, corporate or leisure. Exceptional service and a seamless ride.</p>
+        <ul><li>Private guide</li><li>Flexible itinerary</li><li>City or safari</li></ul>
+        <button class="btn btn-dark js-reserve" type="button">Enquire</button>
+      </div>
+    </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-van">
+        <img class="pager-thumb" src="images/chikoh/minivan.jpg" alt="" />
+        <span class="pager-copy">
+          <span>Previous</span>
+          <strong>Minivans for groups</strong>
+        </span>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-airport">
+        <span class="pager-copy">
+          <span>Next</span>
+          <strong>Airport transfers</strong>
+        </span>
+        <img class="pager-thumb" src="images/chikoh/suv.jpg" alt="" />
+      </button>
+    </nav>
+  </article>
+  <article class="sheet" id="panel-airport">
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
+    <div class="sheet-grid">
+      <img src="images/chikoh/suv.jpg" alt="Airport transfers" />
+      <div class="prose">
+        <p class="eyebrow light">Transfers</p>
+        <h2>Airport transfers</h2>
+        <p>Seamless airport transfers so the trip starts when you land, not when you find a taxi. Nairobi and Mombasa, day or night.</p>
+        <ul><li>JKIA and Wilson</li><li>Moi International, Mombasa</li><li>Lodge or hotel drop</li></ul>
+        <button class="btn btn-dark js-reserve" type="button">Enquire</button>
+      </div>
+    </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-guide">
+        <img class="pager-thumb" src="images/safari-guest.jpg" alt="" />
+        <span class="pager-copy">
+          <span>Previous</span>
+          <strong>Personalised tour with a guide</strong>
+        </span>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-gamedrive">
+        <span class="pager-copy">
+          <span>Next</span>
+          <strong>In-park game drives</strong>
+        </span>
+        <img class="pager-thumb" src="images/chikoh/suv.jpg" alt="" />
+      </button>
+    </nav>
+  </article>
+  <article class="sheet" id="panel-gamedrive">
+    <button class="sheet-back" type="button" data-close-panel>← All transport</button>
+    <div class="sheet-grid">
+      <img src="images/chikoh/suv.jpg" alt="In-park game drives" />
+      <div class="prose">
+        <p class="eyebrow light">In-park</p>
+        <h2>In-park game drives</h2>
+        <p>In-drive gaming in the parks — shared or private. You watch; we handle the gates, the tracks, and the timing.</p>
+        <ul><li>Tsavo East and West</li><li>Amboseli and the coast</li><li>Morning and afternoon slots</li></ul>
+        <button class="btn btn-dark js-reserve" type="button">Enquire</button>
+      </div>
+    </div>
+    <nav class="pager">
+      <button class="pager-link prev" type="button" data-open-panel="panel-airport">
+        <img class="pager-thumb" src="images/chikoh/suv.jpg" alt="" />
+        <span class="pager-copy">
+          <span>Previous</span>
+          <strong>Airport transfers</strong>
+        </span>
+      </button>
+      <button class="pager-link next" type="button" data-open-panel="panel-suv">
+        <span class="pager-copy">
+          <span>Next</span>
+          <strong>4x4 SUVs</strong>
+        </span>
+        <img class="pager-thumb" src="images/chikoh/suv.jpg" alt="" />
+      </button>
+    </nav>
+  </article>
+</div>
+    </main>
+
+    <div data-include="footer"></div>
+    <script src="site.js"></script>
+  </body>
+</html>
