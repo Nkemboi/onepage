@@ -19,6 +19,7 @@
     transport: `${root}transport.html`,
     payment: `${root}payment.html`,
     info: `${root}info.html`,
+    desk: `${root}desk.html`,
   });
 
   const mount = (name, html) => {
@@ -63,6 +64,7 @@
               <div>
                 <h4>Desk</h4>
                 <a href="${links.contact}">Help Center</a>
+                <a href="${links.desk}" data-nav="desk">Pilot Desk</a>
                 <a href="tel:+254721425858">+254 721 425 858</a>
                 <a href="mailto:kenyachikohsafaris@gmail.com">Email the desk</a>
               </div>
@@ -181,6 +183,7 @@
             <div>
               <h4>Desk</h4>
               <a href="${links.contact}">Help Center</a>
+              <a href="${links.desk}">Pilot Desk</a>
               <a href="tel:+254721425858">+254 721 425 858</a>
               <a href="mailto:kenyachikohsafaris@gmail.com">Email the desk</a>
             </div>
@@ -309,6 +312,25 @@
     });
 
     bindHomeAgent();
+    bindDesk();
+  };
+
+  const bindDesk = () => {
+    if (currentPage() !== "desk") return;
+    const go = () => window.PilotDesk && window.PilotDesk.mount();
+    if (window.PilotDesk) {
+      go();
+      return;
+    }
+    const src = `${pageRoot()}desk.js`;
+    let script = document.querySelector("script[data-pilot-desk]");
+    if (!script) {
+      script = document.createElement("script");
+      script.src = src;
+      script.dataset.pilotDesk = "1";
+      document.body.appendChild(script);
+    }
+    script.addEventListener("load", go, { once: true });
   };
 
   const bindHomeAgent = () => {
