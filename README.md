@@ -10,6 +10,7 @@ An AI travel agent for Kenyan destinations that leave unforgettable memories.
 - `editors.html` — editor’s choice circuit
 - `story.html` — about
 - `contact.html` — help and policies
+- `desk.html` — Nairobi Pilot Desk (staff ops board)
 
 Shared chrome (menu, planner, footer) lives in `site.js`. Inner pages use the same hero + article template.
 
